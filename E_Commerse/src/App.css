@@ -1,0 +1,14 @@
+#navbar {
+  background-color: rgb(128, 115, 97);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 0;
+}
+
+#navbar > a {
+  color: rgb(249, 244, 244);
+  text-decoration: none;
+  font-weight: 1000;
+}
