@@ -1,17 +1,21 @@
 import React from 'react'
 import { VStack, Container, Heading, Input,Button } from '@chakra-ui/react'
-import { useState, useContext} from 'react'
+import { useState, useContext, useEffect, useRef} from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext'
 
 
 const Login = () => {
-    const NavLogin = useNavigate()
+    
+    const Myref = useRef("");
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    const{login, authDetails:{isAuthenticated}} = useContext(AuthContext);
 
-    const{login} = useContext(AuthContext);
+    useEffect(()=>{
+        Myref.current.focus()
+    },[]);
 
     async function HandleSubmit(){
         try {
@@ -23,14 +27,20 @@ const Login = () => {
                     password
                 }
             });
+            let Token = res.data.token
 
-            login(res.data.token)
-            NavLogin('/')
+            login({Token, email})
+            
 
         } catch (error) {
             console.log(error)
             
-        }
+        }    
+    }
+
+
+    if(isAuthenticated){
+        return <Navigate to='/'/>
     }
 
 
@@ -41,6 +51,7 @@ const Login = () => {
             <Heading as="h1" size="xl" gap={5}>Login Page</Heading>
            
                 <Input 
+                ref={Myref}
                 placeholder="Email" 
                 type="email" 
                 value={email} 
@@ -57,6 +68,7 @@ const Login = () => {
                 <Button onClick={HandleSubmit} type="submit" colorScheme="teal" mb={4}>Login</Button>
        
         </VStack>
+        <p>eve.holt@reqres.in</p>
     </Container>
     </div>
   )

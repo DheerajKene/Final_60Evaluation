@@ -1,5 +1,5 @@
 #navbar {
-  background-color: rgb(128, 115, 97);
+  background-color: rgb(188, 184, 178);
   padding: 10px;
   display: flex;
   align-items: center;
@@ -8,7 +8,7 @@
 }
 
 #navbar > a {
-  color: rgb(249, 244, 244);
+  color: rgb(67, 24, 24);
   text-decoration: none;
   font-weight: 1000;
 }

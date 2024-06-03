@@ -1,8 +1,18 @@
 import React from 'react'
+import {
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+  } from '@chakra-ui/react'
 
 const ErrorIndicator = () => {
   return (
-    <div>Somthing went wrong...</div>
+    <Alert status='error'>
+        <AlertIcon />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Somthing went wrong..!</AlertDescription>
+    </Alert>
   )
 }
 
