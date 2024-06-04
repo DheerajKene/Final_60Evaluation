@@ -18,7 +18,7 @@ const{authDetails:{email}} = useContext(AuthContext);  //the required elements e
     <div id='navbar'>
         <Heading as="h3" size="md">{email}</Heading>
         <Link to="/">Home</Link>
-        <Link to="/Product/:id">Product Details</Link>
+        {/* <Link to="/Product/:id">Product Details</Link> */}
         <Link to="/Login">Login</Link>
     </div>
   )

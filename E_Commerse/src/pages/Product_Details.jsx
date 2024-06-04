@@ -1,54 +1,19 @@
 //imported the libraries as per the requirments.
 import { useState, useEffect} from "react";
+import { AlertDialogExample } from "../Componants/Alert";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import {Box, Button, Card, Image, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Text, HStack,  AlertDialog,
-    AlertDialogBody,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogContent,
-    AlertDialogOverlay,
-    AlertDialogCloseButton,} from "@chakra-ui/react";
+import {Box, Button, Card, Image, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Text, HStack} from "@chakra-ui/react";
 import LoadingIndicator from "../Componants/LodingIndicator";
 import ErrorIndicator from "../Componants/ErrorIndicator";
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure } from '@chakra-ui/react';
+
 
 export default function Product_Details() {
   const { id } = useParams();   //useParams is used to get and store the product id here.
   const [loading, setLoading] = useState(false);//this state is used to store the loading status.
   const [product, setProduct] = useState({});//this state is used to store the unique product by id.
   const [err, setErr] = useState(false);//this state is used to store the error status.
-
-
-  //function handleCart is ised to show an alert message whic has two buttons that cinfrim and cancal on click event.
-  function handleCart() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
   
-    //The Product details page is design with the help of already built componants from Chakra UI which made the web page easier to understand for the user. 
-      <>
-        <Button onClick={onOpen}>Open Modal</Button>
-  
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              {/* Modal content goes here */}
-              Hello, I'm a modal!
-            </ModalBody>
-  
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    
-  }
 
  //function getData helps to fetch the data from the given api with unique id.
   async function getData(id) {
@@ -131,15 +96,10 @@ export default function Product_Details() {
           </Stack>
         </CardBody>
         <CardFooter>
-            <Button
-                variant="outline"
-                colorScheme="red"
-                onClick={handleCart}
-            >
-                Add to cart
-            </Button>
+            <AlertDialogExample/>
         </CardFooter>
       </Card>
+      
     </>
   );
 }
