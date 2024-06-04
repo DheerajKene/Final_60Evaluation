@@ -1,10 +1,15 @@
+//imported the libraries as per the requirments.
 import React from 'react'
 import {Box, Button, Card, CardHeader, CardBody, CardFooter, Heading, Stack, StackDivider, Text} from "@chakra-ui/react";
-  import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const DataCard = ({id, title, category, price}) => {
-    const navigate = useNavigate()
+
+  //function DataCard is used to show the data into the UI.
+const DataCard = ({id, title, category, price}) => {   //destructuring the requird elements to show.
+    const navigate = useNavigate() //Navigate hook is used to store the navigate status here.
   return (
+    //The Product details page is design with the help of already built componants from Chakra UI which made the web page easier to understand for the user.
     <Card>
         <CardHeader>
             <Heading size="md">{title}</Heading>
@@ -21,6 +26,7 @@ const DataCard = ({id, title, category, price}) => {
                     </Text>
                 </Box>
                 <Box>
+                    
                     <Heading size="xs" textTransform="uppercase">
                         Price
                     </Heading>
@@ -35,7 +41,7 @@ const DataCard = ({id, title, category, price}) => {
                 variant="outline"
                 colorScheme="red"
                 onClick={() => {
-                navigate(`/Product/${id}`);
+                navigate(`/Product/${id}`);//this navigte hook redirect user to the product details page.
                 }}
             >
                 More details

@@ -1,5 +1,7 @@
+//imported the libraries as per the requirments.
+import { useParams } from "react-router-dom";
 import React from 'react'
-import{useState, useEffect} from 'react'
+import{useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import './Home.css'
 import LoadingIndicator from '../Componants/LodingIndicator'
@@ -7,38 +9,48 @@ import ErrorIndicator from '../Componants/ErrorIndicator'
 import {Button, Container,Spinner, Flex, SimpleGrid, Select, HStack,} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import DataCard from '../Componants/dataCard'
+import { AuthContext } from '../Context/AuthContext'
+import {
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+  } from '@chakra-ui/react'
 
 
 const Home = () => {
-    const navigate = useNavigate()
-    const[sortOrder, setSortOrder] = useState("asc");
-    const[loading, setLoading] = useState(false);
-    const[err, setError] = useState(false);
-    const[Data, setData] = useState([]);
-    const[filterValue, setFilterValue] = useState("");
+    const navigate = useNavigate()   //to redirect onto the page.
+    const[sortOrder, setSortOrder] = useState(""); //to store the order value taken from the user by select tag.
+    const[loading, setLoading] = useState(false);  //to manage the loading state.
+    const[err, setError] = useState(false);    //to manage the error state.
+    const[Data, setData] = useState([]);   //to store the fetched data from api. 
+    const[filterValue, setFilterValue] = useState("");  //to store the filter value taken from the user by select tag.
+    const{logout} = useContext(AuthContext);  //logout function retrived from the context by using useContext.
 
 
-
+//function getData helps to fetch the data from the given api.
     async function getData(sortOrder, filterValue){
         setLoading(true)
-        try {
-            // let queryParams = {};
-            // if(filterValue){
-            //     queryParams.category = filterValue;
-            // };
 
-            // if(sortOrder){
-            //     queryParams.sort = "price";
-            //     queryParams.order = sortOrder;
-            // }
+        //params term ia an object inwhich the sort value and filter value are stored and this object is accepted by the axios in get method to fetch the data accordingly.
+        try {
+            let queryParams = {};
+            if(filterValue){
+                queryParams.filter = filterValue;
+            };
+
+            if(sortOrder){
+                queryParams.sort = "price";
+                queryParams.order = sortOrder;
+            }
             let resp = await axios({
                 method:"get",
-                url:`https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-products?filter=${filterValue}&page=1&limit=5&sort=price&order=${sortOrder}`,
+                url:`https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-products`,
+                params: queryParams,
             }); 
+            
             setLoading(false);
             setData(resp.data.data)
-            
-            console.log(Data)
             
         } catch (error) {
             setLoading(false)
@@ -46,56 +58,28 @@ const Home = () => {
             
         }
     }
+
+    //useeffect hook helps to fetch the data as soon as the page load.(mount phase)
     useEffect(()=>{
         getData(sortOrder, filterValue)
     },[sortOrder, filterValue])
 
     if(loading){
-        return <LoadingIndicator/>
+        return <LoadingIndicator/>//if the loading states is true it calls the loadingIndicator function which shows the loading icon onto the web page.
     };
 
     if(err){
-        return <ErrorIndicator/>
+        return <ErrorIndicator/> //if the loading states is true it calls the loadingIndicator function which shows the error message onto the web page.
     };
 
-
-// function ShowData(Data){
-//         container.innerHTML = null;
-        
-//         Data.forEach((ele, i)=>{
-//             let productBox = document.createElement("div");
-//             // let image = document.createElement("img");
-//             // image.src = ele.image;
-
-//             // let brand = document.createElement('h3');
-//             // brand.innerHTML = ele.brand;
-
-//             let title = document.createElement("h3");
-//             title.innerHTML = ele.title;
-
-//             let category = document.createElement('h5');
-//             category.innerHTML = ele.category;
-
-//             let price = document.createElement('h3');
-//             price.innerHTML = `Price: ${ele.price}`;
-
-//             productBox.append(title, category, price);
-//             container.append(productBox);
-//             root.append(container)
-           
-
-//         })
-        
-        
-//     }
    
 
   return (
+    //The Home page is design with the help of already built componants from Chakra UI which made the web page easy to understand for the user. 
     <Container maxW="container.md">
      
         <HStack spacing={3} my={4}>
             <Select
-                bgColor='gray.400'
                 placeholder="Sort by Price"
                 value={sortOrder}
                 onChange={(e) => {
@@ -106,7 +90,7 @@ const Home = () => {
             <option value="desc">High to Low</option>
             </Select>
             <Select
-                bgColor='gray.400'
+                
                 placeholder="Filter by Category"
                 value={filterValue}
                 onChange={(e) => setFilterValue(e.target.value)}
@@ -116,6 +100,11 @@ const Home = () => {
                 <option value="kids">Kids</option>
                 <option value="homedecor">Home Decor</option>
             </Select>
+        
+            <Button onClick={logout} colorScheme='red' variant='outline'> 
+                Logout
+            </Button>
+           
         
         </HStack>
 

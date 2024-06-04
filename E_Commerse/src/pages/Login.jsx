@@ -1,4 +1,6 @@
+//imported the libraries as per the requirments.
 import React from 'react'
+import { useParams } from "react-router-dom";
 import { VStack, Container, Heading, Input,Button } from '@chakra-ui/react'
 import { useState, useContext, useEffect, useRef} from 'react'
 import axios from 'axios'
@@ -8,15 +10,18 @@ import { AuthContext } from '../Context/AuthContext'
 
 const Login = () => {
     
-    const Myref = useRef("");
-    const[email, setEmail] = useState("");
-    const[password, setPassword] = useState("");
-    const{login, authDetails:{isAuthenticated}} = useContext(AuthContext);
+    const Myref = useRef(''); //useRef hook is used to focus onto the input tag as the page load.
+    const[email, setEmail] = useState("");//this state is used to store the value of the user's email.
+    const[password, setPassword] = useState("");  //this state is used to store the value of the user's password.
+    const{login, authDetails:{isAuthenticated}} = useContext(AuthContext);  //login, authDetails  retrived from the context APi by using AuthContext in useContext.
 
+    //this useEffect hook is used onMount lifecycle events which helps to focus onto the input tag as the page load.
     useEffect(()=>{
-        Myref.current.focus()
+        Myref.current.focus();
     },[]);
 
+
+    //function HandleSubmit is invoked onClicking the button which helps to make post request with login details by axios.
     async function HandleSubmit(){
         try {
             let res = await axios({
@@ -27,9 +32,9 @@ const Login = () => {
                     password
                 }
             });
-            let Token = res.data.token
+            let Token = res.data.token //token is stored here which has got when the post request is made.
 
-            login({Token, email})
+            login({Token, email}) //login function is calls here to send the token and the user's email id to the context api.
             
 
         } catch (error) {
@@ -38,14 +43,16 @@ const Login = () => {
         }    
     }
 
-
+//this status of IsAuthenticated from context API is used to Authenticate the user which allow user to enters into the web site if it is true otherwise not.
     if(isAuthenticated){
-        return <Navigate to='/'/>
+        return <Navigate to='/'/>//this Navigate componant is redirect user to the home page if the user is logged in.
     }
 
 
   return (
+     //The Login page is design with the help of already built componants from Chakra UI which made the web page easy to understand for the user. 
     <div>
+        
         <Container marginTop={12}>
         <VStack>
             <Heading as="h1" size="xl" gap={5}>Login Page</Heading>

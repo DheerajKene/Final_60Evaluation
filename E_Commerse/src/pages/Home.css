@@ -1,57 +1,10 @@
-#container{
-
-    width: 90%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin: auto;
-    gap: 20px 10px;
-    background-color: rgb(217, 242, 242);
-    margin-top: 30px;
-    padding: 10px;
     
-}
-
-#container div{
-    width: 310px;
-    height: 450px; 
-    text-wrap: wrap;  
-    border-radius: 10px;
-    margin: auto;
-    background-color: white;
-}
-
-#container div img{  
-    width: 95%;
-    height: 60%;
-    margin-left: 10px;
-    margin-top: 10px;
-}
-
-#container div h3{  
-    font-size: 17px;
-    font-family: Candara;
-    font-weight: 1000;
-    color: rgb(70, 99, 125);
-    padding: 1px 10px;
-}
-
-#container div h5{  
-    font-family: Candara;
-    font-weight: 1000;
-    color: rgb(42, 101, 152);
-    padding: 1px 10px;
-    line-height: 15px;
-    margin: auto;
-    margin-top: 20px;
-}
 select{
-    width: 200px;
-    height: 30px;
+    
     background-color: teal;
     font-size: 18px;
-    color: aliceblue;
+    color: rgb(9, 71, 126);
     font-family: Candara;
     font-weight: 1000;
-    margin-left: 30px;
-    margin-top: 30px;
+
 }
